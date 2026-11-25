@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Emoji Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: #333;
+        }
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #4a4a4a;
+        }
+        p.subtitle {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 85%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        input:focus {
+            border-color: #667eea;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 92%;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #5a6fd6;
+        }
+        .result {
+            margin-top: 25px;
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .emoji {
+            font-size: 60px;
+            margin: 10px 0;
+        }
+        .text-line {
+            font-size: 16px;
+            margin: 6px 0;
+            font-weight: bold;
+            color: #333;
+        }
+        .status {
+            color: #28a745;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>===== MOOD EMOJI GENERATOR =====</h1>
+    <p class="subtitle">How are you feeling today?</p>
+    
+    <input type="text" id="moodInput" placeholder="happy, sad, angry, love, excited, tired, cool" onkeypress="if(event.key==='Enter') checkMood()">
+    <button onclick="checkMood()">Submit</button>
+
+    <div class="result" id="resultBox"></div>
+</div>
+
+<script>
+    const emojis = {
+        "happy": "😊",
+        "sad": "😢",
+        "angry": "😠",
+        "love": "❤️",
+        "excited": "🤩",
+        "tired": "😴",
+        "cool": "😎"
+    };
+
+    const messages = {
+        "happy": "Keep Smiling!",
+        "sad": "Don't worry, Be Happy!",
+        "angry": "Stay Calm!",
+        "love": "Spread Love!",
+        "excited": "Enjoy Your Day!",
+        "tired": "Take Some Rest!",
+        "cool": "Stay Awesome!"
+    };
+
+    function checkMood() {
+        const mood = document.getElementById("moodInput").value.toLowerCase().trim();
+        const resultBox = document.getElementById("resultBox");
+        resultBox.style.display = "block";
+
+        if (mood in emojis) {
+            resultBox.innerHTML = `
+                <div class="text-line">Your Mood:</div>
+                <div class="emoji">${emojis[mood]}</div>
+                <div class="text-line">Message: ${messages[mood]}</div>
+                <div class="status">Status: Success!</div>
+            `;
+        } else {
+            resultBox.innerHTML = <div class="error">Sorry! Mood not found.</div>;
+        }
+    }
+</script>
+
+</body>
+</html>
