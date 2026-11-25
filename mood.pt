@@ -1,0 +1,30 @@
+print("===== MOOD EMOJI GENERATOR =====")
+
+mood = input("How are you feeling today? ").lower()
+
+emojis = {
+    "happy": "😊",
+    "sad": "😢",
+    "angry": "😠",
+    "love": "❤️",
+    "excited": "🤩",
+    "tired": "😴",
+    "cool": "😎"
+}
+
+messages = {
+    "happy": "Keep Smiling!",
+    "sad": "Don't worry, Be Happy!",
+    "angry": "Stay Calm!",
+    "love": "Spread Love!",
+    "excited": "Enjoy Your Day!",
+    "tired": "Take Some Rest!",
+    "cool": "Stay Awesome!"
+}
+
+if mood in emojis:
+    print("\nYour Mood:", emojis[mood])
+    print("Message:", messages[mood])
+    print("Status: Success!")
+else:
+    print("Sorry! Mood not found."
