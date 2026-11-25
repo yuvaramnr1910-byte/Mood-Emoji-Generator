@@ -1,145 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mood Emoji Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            color: #333;
-        }
-        .card {
-            background: white;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 350px;
-        }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #4a4a4a;
-        }
-        p.subtitle {
-            font-size: 15px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        input {
-            width: 85%;
-            padding: 12px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            outline: none;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        input:focus {
-            border-color: #667eea;
-        }
-        button {
-            background-color: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 92%;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #5a6fd6;
-        }
-        .result {
-            margin-top: 25px;
-            display: none;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-        }
-        .emoji {
-            font-size: 60px;
-            margin: 10px 0;
-        }
-        .text-line {
-            font-size: 16px;
-            margin: 6px 0;
-            font-weight: bold;
-            color: #333;
-        }
-        .status {
-            color: #28a745;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 8px;
-        }
-        .error {
-            color: #dc3545;
-            font-size: 16px;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mood Emoji Generator</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; padding: 15px; transition: 0.8s; }
+.card { background: #fff; padding: 26px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.2); text-align: center; width: 100%; max-width: 390px; }
+h1 { font-size: 22px; margin: 0 0 6px; color: #333; }
+.sub { font-size: 14px; color: #666; margin-bottom: 14px; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 14px; }
+.chip { background: #f0f2f5; border: none; padding: 6px 12px; border-radius: 15px; font-size: 13px; cursor: pointer; transition: 0.2s; }
+.chip:hover { background: #667eea; color: #fff; }
+input { width: 88%; padding: 11px; font-size: 15px; border: 2px solid #ddd; border-radius: 10px; outline: none; text-align: center; margin-bottom: 12px; }
+input:focus { border-color: #667eea; }
+.btn { background: #667eea; color: #fff; border: none; padding: 12px; font-size: 16px; border-radius: 10px; cursor: pointer; width: 95%; font-weight: bold; }
+.btn:hover { background: #5568d3; }
+.result { margin-top: 18px; display: none; background: #f8f9fa; padding: 16px; border-radius: 15px; border: 1px solid #eee; text-align: left; }
+.emoji { font-size: 62px; text-align: center; display: block; animation: pop 0.5s ease; }
+@keyframes pop { 0% { transform: scale(0.5); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+.quote { font-size: 16px; font-weight: bold; color: #222; text-align: center; margin: 10px 0 12px; }
+.box { background: #fff; padding: 8px 12px; border-radius: 8px; margin-bottom: 7px; font-size: 13px; color: #444; border-left: 4px solid #667eea; }
+.actions { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+.c-btn { background: #28a745; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; }
+.s-btn { background: #17a2b8; }
+.err { color: #dc3545; font-weight: bold; text-align: center; }
+</style>
 </head>
 <body>
-
 <div class="card">
-    <h1>===== MOOD EMOJI GENERATOR =====</h1>
-    <p class="subtitle">How are you feeling today?</p>
-    
-    <input type="text" id="moodInput" placeholder="happy, sad, angry, love, excited, tired, cool" onkeypress="if(event.key==='Enter') checkMood()">
-    <button onclick="checkMood()">Submit</button>
-
-    <div class="result" id="resultBox"></div>
+<h1>✨ Mood Emoji Generator ✨</h1>
+<p class="sub">How are you feeling today?</p>
+<div class="chips">
+<button class="chip" onclick="setMood('happy')">😊 Happy</button>
+<button class="chip" onclick="setMood('sad')">😢 Sad</button>
+<button class="chip" onclick="setMood('angry')">😠 Angry</button>
+<button class="chip" onclick="setMood('love')">❤️ Love</button>
+<button class="chip" onclick="setMood('excited')">🤩 Excited</button>
+<button class="chip" onclick="setMood('tired')">😴 Tired</button>
+<button class="chip" onclick="setMood('cool')">😎 Cool</button>
 </div>
-
+<input type="text" id="moodInput" placeholder="Type happy, sad, angry, love..." onkeypress="if(event.key==='Enter') run()">
+<button class="btn" onclick="run()">Check My Vibe</button>
+<div class="result" id="res"></div>
+</div>
 <script>
-    const emojis = {
-        "happy": "😊",
-        "sad": "😢",
-        "angry": "😠",
-        "love": "❤️",
-        "excited": "🤩",
-        "tired": "😴",
-        "cool": "😎"
-    };
-
-    const messages = {
-        "happy": "Keep Smiling!",
-        "sad": "Don't worry, Be Happy!",
-        "angry": "Stay Calm!",
-        "love": "Spread Love!",
-        "excited": "Enjoy Your Day!",
-        "tired": "Take Some Rest!",
-        "cool": "Stay Awesome!"
-    };
-
-    function checkMood() {
-        const mood = document.getElementById("moodInput").value.toLowerCase().trim();
-        const resultBox = document.getElementById("resultBox");
-        resultBox.style.display = "block";
-
-        if (mood in emojis) {
-            resultBox.innerHTML = `
-                <div class="text-line">Your Mood:</div>
-                <div class="emoji">${emojis[mood]}</div>
-                <div class="text-line">Message: ${messages[mood]}</div>
-                <div class="status">Status: Success!</div>
-            `;
-        } else {
-            resultBox.innerHTML = <div class="error">Sorry! Mood not found.</div>;
-        }
-    }
+const data = {
+happy: {
+e: ["😊", "🥳", "😄", "🌞", "😁"],
+q: ["Keep Smiling! Your joy lights up the room.", "Happiness looks great on you! Enjoy today.", "You deserve all this joy—keep shining!"],
+a: "Share a smile or text a friend today.", f: "I attract positivity and create my own happiness.",
+v: "Upbeat Pop / Feel-Good Beats 🎶", bg: "linear-gradient(135deg, #f6d365, #fda085)"
+},
+sad: {
+e: ["😢", "🫂", "💙", "🌧️", "🥺"],
+q: ["Don't worry, Be Happy! Tough times never last.", "Take it one step at a time—better days are coming.", "Sending you strength. You are stronger than you think!"],
+a: "Take a short walk, drink water, and talk to someone.", f: "This feeling is temporary; I grow stronger every day.",
+v: "Calm Piano / Soothing Rain Sounds 🎹", bg: "linear-gradient(135deg, #89f7fe, #66a6ff)"
+},
+angry: {
+e: ["😠", "🧘", "🌬️", "🧊", "😤"],
+q: ["Stay Calm! Peace begins with a deep breath.", "Don't let one moment ruin your whole day.", "Pause, breathe, and let go of stress."],
+a: "Inhale for 4 seconds, hold for 4, and exhale slowly.", f: "I choose peace over anger and respond calmly.",
+v: "Deep Meditation / Lo-Fi Chill Beats 🎧", bg: "linear-gradient(135deg, #ff758c, #ff7eb3)"
+},
+love: {
+e: ["❤️", "🥰", "💖", "😍", "🌹"],
+q: ["Spread Love! A kind heart is a true treasure.", "Love makes life meaningful—cherish your people.", "Your warmth makes a big difference in others' lives!"],
+a: "Write down 3 things or people you appreciate right now.", f: "I am surrounded by love and genuine connections.",
+v: "Romantic Acoustic / Warm Soul Melodies 🎸", bg: "linear-gradient(135deg, #ff9a9e, #fecfef)"
+},
+excited: {
+e: ["🤩", "🚀", "🔥", "🎉", "⚡"],
+q: ["Enjoy Your Day! Your enthusiasm is unstoppable!", "Big things are ahead—use this energy for your goals!", "Ride this excitement and make today unforgettable!"],
+a: "Start working on that big idea you've been planning!", f: "I am full of energy and ready for great success.",
+v: "High-Energy Dance / Motivational Anthems 🔥", bg: "linear-gradient(135deg, #f093fb, #f5576c)"
+},
+tired: {
+e: ["😴", "🛌", "☕", "🌙", "🥱"],
+q: ["Take Some Rest! Even strong minds need a recharge.", "You worked hard—give yourself permission to relax.", "Rest is not laziness; it is fuel for tomorrow!"],
+a: "Stretch your body, drink warm water, and rest your eyes.", f: "I honor my need for rest and wake up refreshed.",
+v: "Soft Ambient / Nighttime Sleep Melodies 🌌", bg: "linear-gradient(135deg, #a18cd1, #fbc2eb)"
+},
+cool: {
+e: ["😎", "🕶️", "✨", "🤙", "🔥"],
+q: ["Stay Awesome! Your confidence inspires others.", "Nothing can shake your vibe—lead with style!", "You've got everything under control today!"],
+a: "Help someone solve a problem using your calm confidence.", f: "I am confident, focused, and ready for anything.",
+v: "Smooth Jazz / Chill Hip-Hop Instrumentals 🎷", bg: "linear-gradient(135deg, #43e97b, #38f9d7)"
+}
+};
+let shareTxt = "";
+function setMood(m) { document.getElementById("moodInput").value = m; run(); }
+function run() {
+const m = document.getElementById("moodInput").value.toLowerCase().trim();
+const res = document.getElementById("res");
+res.style.display = "block";
+if (data[m]) {
+const d = data[m];
+const em = d.e[Math.floor(Math.random() * d.e.length)];
+const qt = d.q[Math.floor(Math.random() * d.q.length)];
+shareTxt = My Mood: ${m.toUpperCase()} ${em}\n"${qt}";
+document.body.style.background = d.bg;
+res.innerHTML = <span class="emoji">${em}</span><div class="quote">"${qt}"</div><div class="box"><strong>💡 Do This:</strong> ${d.a}</div><div class="box"><strong>✨ Affirmation:</strong> ${d.f}</div><div class="box"><strong>🎵 Vibe:</strong> ${d.v}</div><div class="actions"><button class="c-btn" onclick="cp('${em}')">Copy ${em}</button><button class="c-btn s-btn" onclick="cp(shareTxt)">Copy Card</button></div>;
+} else {
+document.body.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+res.innerHTML = <div class="err">Sorry! Mood not found. Pick one above!</div>;
+}
+}
+function cp(t) { navigator.clipboard.writeText(t); alert("Copied to clipboard!"); }
 </script>
-
 </body>
 </html>
